@@ -1,0 +1,343 @@
+.shopProfileAvatarDisplay {
+  display: block;
+}
+.shopProfilePhotoContainer {
+  padding: 4px;
+  border: 1px solid #e8c547;
+  border-radius: 1.25rem;
+  background: #181818;
+  margin-right: 12px;
+}
+.shopProfilePhotoBox {
+  border: 2px solid #e8c547;
+  border-radius: 0.9rem;
+  display: inline-block;
+  padding: 0.18rem;
+  background: #181818;
+}
+.shopProfilePhoto {
+  border: 2px solid #bfa94a;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  background: #181818;
+}
+.shopProfileAvatar {
+  border: 3px solid #e8c547;
+  box-shadow: 0 0 0 4px #181818;
+}
+
+.profilePageBg {
+  background: #0a0a0a;
+}
+
+.profilePageCoverGradient {
+  background: linear-gradient(to bottom, transparent 40%, #0a0a0a 100%);
+}
+
+.profilePageHeader {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.profilePageAvatar {
+  border: 3px solid #0a0a0a;
+  box-shadow: 0 0 0 2px rgba(232, 197, 71, 0.4);
+}
+
+.profilePageVerified {
+  background: #0a0a0a;
+}
+
+.profilePageDisplayName {
+  color: #f5f5f5;
+}
+
+.profilePageUsername {
+  color: #666;
+}
+
+.profilePageBio {
+  color: #888;
+}
+
+.profilePageJoined {
+  color: #555;
+}
+
+.profilePageArtTitle {
+  color: #f5f5f5;
+}
+
+.profilePageNoArt {
+  color: #555;
+}
+.artGridWrap {
+  padding-bottom: 4rem;
+}
+.artZoomWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  border-radius: 1rem;
+  background: #181818;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+}
+.artZoomImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1rem;
+  transition: transform 0.2s;
+}
+.artZoomImg:hover,
+.artZoomImg:focus {
+  transform: scale(1.04);
+  outline: 2px solid #e8c547;
+}
+
+/* Modal styles for zoom */
+.zoomModalOverlay {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s;
+}
+.zoomModalContent {
+  position: relative;
+  background: #181818;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.zoomModalImg {
+  max-width: 70vw;
+  max-height: 70vh;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+}
+.zoomModalClose {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+  z-index: 1;
+  transition: color 0.2s;
+}
+.zoomModalClose:hover {
+  color: #e8c547;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* ProfilePage.module.css */
+
+.pageBg {
+  min-height: 100vh;
+  background: #0a0a0a;
+}
+
+.coverContainer {
+  position: relative;
+  height: 12rem;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .coverContainer {
+    height: 16rem;
+  }
+}
+.coverImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, #0a0a0a 100%);
+}
+
+.profileHeader {
+  position: relative;
+  margin-top: -4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+@media (min-width: 640px) {
+  .profileHeader {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+}
+.avatarWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+.avatarImg {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 1rem;
+  object-fit: cover;
+  border: 3px solid #0a0a0a;
+  box-shadow: 0 0 0 2px rgba(232, 197, 71, 0.4);
+}
+@media (min-width: 768px) {
+  .avatarImg {
+    width: 7rem;
+    height: 7rem;
+  }
+}
+.verifiedBadge {
+  position: absolute;
+  bottom: -0.25rem;
+  right: -0.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+}
+.profileInfo {
+  flex: 1 1 0%;
+  min-width: 0;
+}
+.profileNameRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+@media (min-width: 640px) {
+  .profileNameRow {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+.displayName {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f5f5f5;
+}
+.username {
+  font-size: 0.875rem;
+  color: #666;
+}
+.bio {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  max-width: 32rem;
+  color: #888;
+}
+.joined {
+  margin-top: 0.375rem;
+  font-size: 0.75rem;
+  color: #555;
+}
+.shopBtnWrap {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.shopBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #e8c547, #f0a030);
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+
+.filterBar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 0;
+}
+@media (min-width: 640px) {
+  .filterBar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.artBoughtTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #f5f5f5;
+}
+.filterBtns {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.filterBtn {
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: #232323;
+  color: #aaa;
+  border: none;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.filterBtn:hover {
+  background: #333;
+}
+.activeFilterBtn {
+  padding: 0.375rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: #e8c547;
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+
+.artGridWrap {
+  padding-bottom: 4rem;
+}
+.noArtMsg {
+  text-align: center;
+  padding: 4rem 0;
+  color: #555;
+}
+.noArtIcon {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0.75rem;
+  opacity: 0.4;
+}

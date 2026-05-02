@@ -1,0 +1,66 @@
+.bgProfile {
+  background: #0a0a0a;
+}
+.walletButton {
+  background: linear-gradient(135deg, #e8c547, #f0a030);
+  color: #000;
+}
+.profileTitle {
+  color: #f5f5f5;
+}
+.profileWelcome {
+  color: #e8c547;
+}
+.profileUsername {
+  color: #888;
+}
+.profileSectionTitle {
+  color: #f5f5f5;
+}
+/* Navbar.module.css */
+.bgNavbar {
+  background: rgba(10, 10, 10, 0.85);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.logoBg {
+  background: linear-gradient(135deg, #e8c547, #f0a030);
+}
+.logoText {
+  color: #f5f5f5;
+}
+.searchIcon {
+  color: #666;
+}
+.searchInput {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f5;
+}
+.profileRing {
+  box-shadow: 0 0 0 2px rgba(232, 197, 71, 0.4);
+}
+.dropdownBg {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.dropdownBorder {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+.dropdownText {
+  color: #f5f5f5;
+}
+.dropdownSubText {
+  color: #666;
+}
+.menuProfile {
+  color: #d0d0d0;
+}
+.menuSignOut {
+  color: #e87070;
+}
+.menuMobileBg {
+  background: rgba(10, 10, 10, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}

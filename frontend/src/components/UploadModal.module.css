@@ -1,0 +1,89 @@
+.dateInput::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+.modalHeader {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.modalTitle {
+  color: #f5f5f5;
+}
+
+.modalSubtitle {
+  color: #666;
+}
+
+.stepDivider {
+  background: #333;
+}
+
+.stepDividerActive {
+  background: #e8c547;
+}
+
+.stepCircle {
+  background: #333;
+  color: #888;
+}
+
+.stepCircleActive {
+  background: #e8c547;
+  color: #000;
+}
+
+.stepLabel {
+  color: #666;
+}
+
+.stepLabelActive {
+  color: #f5f5f5;
+}
+
+.dropZone {
+  border: 2px dashed rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.dropZoneActive {
+  border: 2px dashed #e8c547;
+  background: rgba(232, 197, 71, 0.05);
+}
+
+.dropIcon {
+  background: rgba(232, 197, 71, 0.1);
+  border: 1px solid rgba(232, 197, 71, 0.2);
+}
+
+.dropText {
+  color: #f5f5f5;
+}
+
+.dropSubText {
+  color: #666;
+}
+
+.dropHint {
+  color: #444;
+}
+
+.previewRemoveBtn {
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+}
+
+.inputField {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f5;
+}
+
+.textareaField {
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f5f5f5;
+}
+
+.backBtn {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #888;
+}

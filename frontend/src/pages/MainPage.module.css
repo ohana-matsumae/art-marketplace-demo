@@ -1,0 +1,115 @@
+.artInfoBox {
+  width: 100%;
+  background: #232323;
+  border-radius: 0 0 1rem 1rem;
+  padding: 0.5rem 0.75rem 0.75rem 0.75rem;
+  color: #f3f3f3;
+  font-size: 0.95rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+}
+.artTitle {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 0.1rem;
+  color: #e8c547;
+}
+.artSeller {
+  font-size: 0.93rem;
+  color: #bdbdbd;
+}
+.artPrice {
+  font-size: 0.98rem;
+  color: #7be495;
+  font-weight: 500;
+  margin-top: 0.1rem;
+}
+.artDescription {
+  font-size: 0.92rem;
+  color: #aaa;
+  margin: 0.1rem 0;
+}
+.artDate {
+  font-size: 0.91rem;
+  color: #888;
+}
+
+.bgDark {
+  background: #0a0a0a;
+}
+.heroMinHeight {
+  min-height: 320px;
+}
+.heroGradient {
+  background: linear-gradient(
+    135deg,
+    rgba(232, 197, 71, 0.06) 0%,
+    rgba(240, 160, 48, 0.04) 50%,
+    transparent 100%
+  );
+}
+.blobGold {
+  width: 600px;
+  height: 600px;
+  top: -200px;
+  left: -100px;
+  background: radial-gradient(
+    circle,
+    rgba(232, 197, 71, 0.08) 0%,
+    transparent 70%
+  );
+}
+.blobPurple {
+  width: 400px;
+  height: 400px;
+  top: 0;
+  right: 0;
+  background: radial-gradient(
+    circle,
+    rgba(180, 100, 255, 0.06) 0%,
+    transparent 70%
+  );
+}
+.goldText {
+  color: #e8c547;
+}
+.whiteText {
+  color: #f5f5f5;
+}
+.grayText {
+  color: #888;
+}
+.grayTextLight {
+  color: #666;
+}
+.grayTextLighter {
+  color: #555;
+}
+.statValue {
+  color: #e8c547;
+}
+.statLabel {
+  color: #666;
+}
+.categoryActive {
+  background: rgba(232, 197, 71, 0.15);
+  border: 1px solid rgba(232, 197, 71, 0.4);
+  color: #e8c547;
+}
+.categoryInactive {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  color: #888;
+}
+.sortActive {
+  background: rgba(232, 197, 71, 0.12);
+  color: #e8c547;
+  border: 1px solid rgba(232, 197, 71, 0.3);
+}
+.sortInactive {
+  background: transparent;
+  color: #666;
+  border: 1px solid transparent;
+}
