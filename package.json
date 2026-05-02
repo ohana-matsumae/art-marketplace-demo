@@ -1,10 +1,25 @@
 {
   "name": "art-marketplace-demo",
+  "private": true,
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "hardhat ignition deploy --network sepolia ignition/modules/ArtMarketplace.ts",
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "test:solidity": "hardhat test solidity",
+    "test:nodejs": "hardhat test nodejs",
+    "backend:dev": "npm run dev -w backend",
+    "backend:build": "npm run build -w backend",
+    "frontend:dev": "npm run dev -w frontend",
+    "frontend:build": "npm run build -w frontend",
+    "frontend:lint": "npm run lint -w frontend",
+    "frontend:preview": "npm run preview -w frontend"
   },
   "keywords": [],
   "author": "",

@@ -15,6 +15,25 @@ This example project includes:
 
 ## Usage
 
+### Workspace setup
+
+This repository uses npm workspaces with `frontend` as a child package.
+
+Install all dependencies from the repository root:
+
+```shell
+npm install
+```
+
+Run frontend commands from the root:
+
+```shell
+npm run frontend:dev
+npm run frontend:build
+npm run frontend:lint
+npm run frontend:preview
+```
+
 ### Running Tests
 
 To run all the tests in the project, execute the following command:

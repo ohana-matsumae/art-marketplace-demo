@@ -1,5 +1,5 @@
 # Node modules
-/node_modules
+node_modules
 
 # Compilation output
 /dist
@@ -21,6 +21,10 @@
 .env.*
 !.env.example
 
+# Backend uploads (private/public asset storage — never commit)
+uploads/
+backend/uploads
+
 # Hardhat coverage reports
 /coverage
 
@@ -29,3 +33,4 @@
 
 # Snapshot cheatcodes output
 /snapshots
+ignition/deployments

@@ -1,21 +1,24 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Search, User, Store, LogOut, Menu, X, Sparkles } from "lucide-react";
-import { CURRENT_USER } from "../data/mockData";
+import { useWallet } from "../hooks/useWallet";
 import styles from "./Navbar.module.css";
 
 interface NavbarProps {
   onSearch?: (query: string) => void;
 }
 
-import { useLocation } from "react-router-dom";
+function truncateAddress(addr: string) {
+  return addr.slice(0, 6) + "…" + addr.slice(-4);
+}
 
 export default function Navbar({ onSearch }: NavbarProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchVal, setSearchVal] = useState("");
   const location = useLocation();
+  const { address, isConnected, isConnecting, connectWallet, disconnect } = useWallet();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +66,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
               />
               <input
                 type="text"
-                placeholder="Search art, artists, styles…"
+                placeholder="Search art, artists…"
                 value={searchVal}
                 onChange={(e) => setSearchVal(e.target.value)}
                 className={
@@ -74,16 +77,21 @@ export default function Navbar({ onSearch }: NavbarProps) {
             </div>
           </form>
         </div>
+
         <div className="flex items-center gap-2 md:gap-4 pr-1 md:pr-2 justify-end">
-          {isProfilePage ? (
+          {!isConnected ? (
             <motion.button
-              whileHover={{ scale: 1.08, boxShadow: "0 0 16px 0 #e8c547" }}
+              onClick={connectWallet}
+              disabled={isConnecting}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.96 }}
-              transition={{ type: "spring", stiffness: 350, damping: 18 }}
-              className="px-5 py-2 rounded-full bg-[#e8c547] text-black font-semibold hover:bg-[#f0a030] transition"
-              style={{ minWidth: 160 }}
+              className="px-4 py-2 rounded-full text-sm font-semibold disabled:opacity-60 transition"
+              style={{
+                background: "linear-gradient(135deg, #e8c547, #f0a030)",
+                color: "#000",
+              }}
             >
-              Connect your wallet
+              {isConnecting ? "Connecting…" : "Connect Wallet"}
             </motion.button>
           ) : (
             <div className="relative">
@@ -91,23 +99,27 @@ export default function Navbar({ onSearch }: NavbarProps) {
                 onClick={() => setDropdownOpen((p) => !p)}
                 className="flex items-center gap-2 rounded-full p-0.5 hover:ring-2 transition-all"
                 whileHover={{
-                  scale: 1.13,
+                  scale: 1.08,
                   boxShadow: "0 4px 24px 0 rgba(232,197,71,0.18)",
                 }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 350, damping: 18 }}
               >
-                <img
-                  src={CURRENT_USER.avatar}
-                  alt="avatar"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
+                <div
+                  className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+                  style={{
+                    background: "linear-gradient(135deg, #e8c547, #f0a030)",
+                    color: "#000",
+                  }}
+                >
+                  {address ? address.slice(2, 4).toUpperCase() : "?"}
+                </div>
                 <span
                   className={
                     "hidden sm:block text-sm font-medium " + styles.logoText
                   }
                 >
-                  {CURRENT_USER.displayName}
+                  {address ? truncateAddress(address) : ""}
                 </span>
               </motion.button>
               <AnimatePresence>
@@ -125,23 +137,22 @@ export default function Navbar({ onSearch }: NavbarProps) {
                     <div
                       className={"px-4 py-3 border-b " + styles.dropdownBorder}
                     >
-                      <p className={"text-sm font-medium " + styles.dropdownText}>
-                        {CURRENT_USER.displayName}
-                      </p>
-                      <p className={"text-xs mt-0.5 " + styles.dropdownSubText}>
-                        @{CURRENT_USER.username}
+                      <p className={"text-xs font-mono truncate " + styles.dropdownText}>
+                        {address}
                       </p>
                     </div>
-                    <Link
-                      to="/profile"
-                      onClick={() => setDropdownOpen(false)}
-                      className={
-                        "flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-white/5 transition-colors " +
-                        styles.menuProfile
-                      }
-                    >
-                      <User size={15} /> My Profile
-                    </Link>
+                    {!isProfilePage && (
+                      <Link
+                        to="/profile"
+                        onClick={() => setDropdownOpen(false)}
+                        className={
+                          "flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-white/5 transition-colors " +
+                          styles.menuProfile
+                        }
+                      >
+                        <User size={15} /> My Profile
+                      </Link>
+                    )}
                     <Link
                       to="/manage-shop"
                       onClick={() => setDropdownOpen(false)}
@@ -153,18 +164,23 @@ export default function Navbar({ onSearch }: NavbarProps) {
                       <Store size={15} /> Manage Shop
                     </Link>
                     <button
+                      onClick={() => {
+                        disconnect();
+                        setDropdownOpen(false);
+                      }}
                       className={
                         "w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-white/5 transition-colors " +
                         styles.menuSignOut
                       }
                     >
-                      <LogOut size={15} /> Sign Out
+                      <LogOut size={15} /> Disconnect
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
           )}
+
           <button
             className="ml-1 md:hidden w-9 h-9 flex items-center justify-center rounded-full hover:bg-white/5"
             onClick={() => setMenuOpen((p) => !p)}
@@ -176,6 +192,7 @@ export default function Navbar({ onSearch }: NavbarProps) {
             )}
           </button>
         </div>
+
         <AnimatePresence>
           {menuOpen && (
             <motion.div

@@ -1,0 +1,47 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: artmarket-backend
+    restart: unless-stopped
+    expose:
+      - "3001"
+    volumes:
+      - uploads_data:/app/uploads
+    environment:
+      NODE_ENV: production
+      BACKEND_PORT: 3001
+      BACKEND_URL: ${BACKEND_URL}
+      FRONTEND_URL: ${FRONTEND_URL}
+      SESSION_SECRET: ${SESSION_SECRET}
+      VITE_CONTRACT_ADDRESS: ${VITE_CONTRACT_ADDRESS}
+      VITE_SEPOLIA_RPC_URL: ${VITE_SEPOLIA_RPC_URL}
+      UPLOADS_DIR: /app/uploads
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+      args:
+        VITE_CONTRACT_ADDRESS: ${VITE_CONTRACT_ADDRESS:-0x0000000000000000000000000000000000000000}
+        VITE_CHAIN_ID: ${VITE_CHAIN_ID:-11155111}
+        VITE_SEPOLIA_RPC_URL: ${VITE_SEPOLIA_RPC_URL:-https://sepolia.infura.io/v3/your-key}
+        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://localhost:3001}
+    container_name: artmarket-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    expose:
+      - "8080"
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: tippost-cloudflared
+    depends_on:
+      - frontend
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TUNNEL_TOKEN}
+
+volumes:
+  uploads_data:

@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import type { ArtPiece } from "../data/mockData";
+import { formatEther } from "viem";
+import type { OnChainListing } from "../abi/ArtMarketplace";
+
 function ZoomModal({
   open,
   imgSrc,
@@ -26,22 +28,28 @@ function ZoomModal({
 }
 
 interface ArtCardProps {
-  art: ArtPiece;
+  listing: OnChainListing;
+  /** Full-quality image URI revealed after purchase. Pass only for bought items. */
+  fullImageURI?: string;
   index?: number;
-  bought?: boolean;
+  onBuy?: (listingId: bigint) => void;
+  isBuyPending?: boolean;
 }
 
 export default function ArtCard({
-  art,
+  listing,
+  fullImageURI,
   index = 0,
-  bought = false,
+  onBuy,
+  isBuyPending = false,
 }: ArtCardProps) {
   const navigate = useNavigate();
-
   const [zoomOpen, setZoomOpen] = useState(false);
-  const datePosted = "April 2026";
-  const description =
-    "This is a sample description for the artwork. Replace with real description if available.";
+
+  const bought = !!fullImageURI;
+  const displayImage = bought ? fullImageURI : listing.imageURIWatermarked;
+  const sellerShort =
+    listing.seller.slice(0, 6) + "…" + listing.seller.slice(-4);
 
   return (
     <>
@@ -51,12 +59,12 @@ export default function ArtCard({
         transition={{ duration: 0.4, delay: index * 0.06 }}
         whileHover={{ y: -4 }}
         className="group relative rounded-2xl overflow-hidden flex flex-col cursor-pointer bg-[#111111] border border-[rgba(255,255,255,0.06)]"
-        onClick={() => navigate(`/shop/${art.seller.id}`)}
+        onClick={() => navigate(`/shop/${listing.seller}`)}
       >
         <div className="relative overflow-hidden group aspect-3/4">
           <img
-            src={art.image}
-            alt={art.title}
+            src={displayImage}
+            alt={listing.title}
             className={
               bought
                 ? "w-full h-full object-cover cursor-zoom-in"
@@ -84,9 +92,19 @@ export default function ArtCard({
                 <motion.button
                   whileHover={{ scale: 1.08 }}
                   whileTap={{ scale: 0.92 }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-linear-to-tr from-[#e8c547] to-[#f0a030] text-black"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onBuy?.(listing.id);
+                  }}
+                  disabled={isBuyPending}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold bg-linear-to-tr from-[#e8c547] to-[#f0a030] text-black disabled:opacity-70"
                 >
-                  <ShoppingCart size={14} /> Buy
+                  {isBuyPending ? (
+                    <Loader size={14} className="animate-spin" />
+                  ) : (
+                    <ShoppingCart size={14} />
+                  )}
+                  {isBuyPending ? "Buying…" : "Buy"}
                 </motion.button>
               </div>
             </>
@@ -94,42 +112,42 @@ export default function ArtCard({
         </div>
         <div className="p-4 flex flex-col gap-2">
           <h3 className="font-semibold text-sm leading-snug text-[#f5f5f5]">
-            {art.title}
+            {listing.title}
           </h3>
           <div className="flex items-center gap-2">
             <span
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+              className="flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer text-xs text-[#888] font-mono"
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(`/shop/${art.seller.id}`);
+                navigate(`/shop/${listing.seller}`);
               }}
             >
-              <img
-                src={art.seller.avatar}
-                alt={art.seller.displayName}
-                className="w-5 h-5 rounded-full object-cover"
-              />
-              <span className="text-xs text-[#888]">
-                {art.seller.displayName}
-              </span>
+              {sellerShort}
             </span>
-            <span className="text-xs ml-2 text-[#666]">{datePosted}</span>
           </div>
-          <p className="text-xs text-[#aaa]">{description}</p>
+          {listing.description && (
+            <p className="text-xs text-[#aaa] line-clamp-2">{listing.description}</p>
+          )}
           <div className="flex items-center mt-1">
             <div>
               <p className="text-xs text-[#666]">Price</p>
               <p className="font-bold text-sm text-[#e8c547]">
-                ${art.price} USD
+                {formatEther(listing.priceWei)} ETH
               </p>
             </div>
+            {listing.assetCount > 0n && (
+              <span className="ml-auto text-xs text-[#666]">
+                +{listing.assetCount.toString()} file
+                {listing.assetCount > 1n ? "s" : ""}
+              </span>
+            )}
           </div>
         </div>
       </motion.div>
       {bought && (
         <ZoomModal
           open={zoomOpen}
-          imgSrc={art.image}
+          imgSrc={displayImage}
           onClose={() => setZoomOpen(false)}
         />
       )}
