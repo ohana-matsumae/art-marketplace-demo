@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, User, Store, LogOut, Menu, X, Sparkles } from "lucide-react";
+import { Search, User, Store, LogOut, Menu, X, } from "lucide-react";
 import { useWallet } from "../hooks/useWallet";
 import styles from "./Navbar.module.css";
 
@@ -38,7 +38,11 @@ export default function Navbar({ onSearch }: NavbarProps) {
             styles.logoBg
           }
         >
-          <Sparkles size={16} color="#000" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
+            <rect x="3" y="3" width="18" height="18" rx="4" fill="#e8c547"/>
+            <path d="M17 7l-8 8" stroke="#111" strokeWidth="2.5" strokeLinecap="round"/>
+            <path d="M9.5 17c.7 1.4 2.8 1.4 3.5 0 .7-1.4-1.4-2.8-1.4-2.8s-2.1 1.4-1.4 2.8z" fill="#111"/>
+          </svg>
         </div>
         <span
           className={
@@ -51,32 +55,6 @@ export default function Navbar({ onSearch }: NavbarProps) {
       </Link>
 
       <>
-        <div className="flex-1 flex justify-center">
-          <form
-            onSubmit={handleSearch}
-            className="hidden md:flex w-full max-w-lg items-center gap-2"
-          >
-            <div className="relative flex-1">
-              <Search
-                size={15}
-                className={
-                  "absolute left-3 top-1/2 -translate-y-1/2 " +
-                  styles.searchIcon
-                }
-              />
-              <input
-                type="text"
-                placeholder="Search art, artists…"
-                value={searchVal}
-                onChange={(e) => setSearchVal(e.target.value)}
-                className={
-                  "w-full rounded-full py-2 pl-9 pr-4 text-sm outline-none " +
-                  styles.searchInput
-                }
-              />
-            </div>
-          </form>
-        </div>
 
         <div className="flex items-center gap-2 md:gap-4 pr-1 md:pr-2 justify-end">
           {!isConnected ? (
