@@ -1,5 +1,21 @@
 export const BACKEND_URL =
-  import.meta.env.VITE_BACKEND_URL ?? "http://localhost:3001";
+  import.meta.env.VITE_BACKEND_URL || "";
+
+/**
+ * Normalizes a stored asset URL to a relative path.
+ * On-chain URIs may have been stored with an old absolute host
+ * (e.g. http://localhost:3001/public/...). This strips the host so
+ * the request routes through nginx on the current origin instead.
+ */
+export function normalizeAssetUrl(url: string): string {
+  if (!url) return url;
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname;
+  } catch {
+    return url;
+  }
+}
 
 type ErrorPayload = {
   error?: string;

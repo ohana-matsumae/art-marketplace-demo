@@ -4,6 +4,7 @@ import { ShoppingCart, Loader } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { formatEther } from "viem";
 import type { OnChainListing } from "../abi/ArtMarketplace";
+import { normalizeAssetUrl } from "../lib/backend";
 
 function ZoomModal({
   open,
@@ -47,7 +48,7 @@ export default function ArtCard({
   const [zoomOpen, setZoomOpen] = useState(false);
 
   const bought = !!fullImageURI;
-  const displayImage = bought ? fullImageURI : listing.imageURIWatermarked;
+  const displayImage = normalizeAssetUrl(bought ? fullImageURI : listing.imageURIWatermarked);
   const sellerShort =
     listing.seller.slice(0, 6) + "…" + listing.seller.slice(-4);
 

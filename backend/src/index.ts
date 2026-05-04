@@ -52,11 +52,22 @@ app.use(
     cookie: {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      // Start with secure=false; adjusted per-request below based on protocol
+      secure: false,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     },
   }),
 );
+
+// Dynamically set cookie.secure based on whether the request actually arrived
+// over HTTPS (via Cloudflare/nginx X-Forwarded-Proto). This allows the same
+// image to work for both http://localhost:5173 and the HTTPS tunnel without
+// breaking session continuity.
+app.use((req, _res, next) => {
+  req.session.cookie.secure =
+    req.secure || req.headers["x-forwarded-proto"] === "https";
+  next();
+});
 
 // ── Routes ──────────────────────────────────────────────────────────────────
 app.use("/auth", authRouter);

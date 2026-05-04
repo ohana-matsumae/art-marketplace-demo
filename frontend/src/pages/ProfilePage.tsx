@@ -8,6 +8,7 @@ import BuySuccessModal from "../components/BuySuccessModal";
 import { useWallet } from "../hooks/useWallet";
 import { useProfile } from "../hooks/useProfile";
 import { useBuyerPurchases } from "../hooks/useListings";
+import { normalizeAssetUrl } from "../lib/backend";
 import styles from "./ProfilePage.module.css";
 
 function ProfilePage() {
@@ -136,7 +137,7 @@ function ProfilePage() {
                     // Full image URI is fetched separately per-listing when needed;
                     // passing imageURIWatermarked as placeholder keeps the grid
                     // rendering without additional per-card RPC calls.
-                    fullImageURI={listing.imageURIWatermarked}
+                    fullImageURI={normalizeAssetUrl(listing.imageURIWatermarked)}
                     index={i}
                   />
                   <button

@@ -10,6 +10,7 @@ import { useSellerListings } from "../hooks/useListings";
 import { useProfile } from "../hooks/useProfile";
 import { useWallet } from "../hooks/useWallet";
 import { useBuyArt } from "../hooks/useBuyArt";
+import { normalizeAssetUrl } from "../lib/backend";
 import styles from "./ProfilePage.module.css";
 
 const CONTRACT_ADDRESS = import.meta.env
@@ -94,7 +95,7 @@ const ShopPage: React.FC<ShopPageProps> = ({ isOwner: isOwnerProp }) => {
               initial={{ scale: 1.1, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.7 }}
-              src={bannerListing.imageURIWatermarked}
+              src={normalizeAssetUrl(bannerListing.imageURIWatermarked)}
               alt="Cover Art"
               className="w-full h-full object-cover object-center"
             />

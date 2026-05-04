@@ -5,8 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: artmarket-backend
     restart: unless-stopped
-    ports:
-      - "3001:3001"
+    # No ports — backend is internal only, accessed via the frontend nginx proxy
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/health', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
       interval: 30s
@@ -14,15 +13,18 @@ services:
       retries: 3
       start_period: 40s
     volumes:
-      - uploads_data:/app/uploads
+      - ./uploads:/app/uploads
     environment:
-      NODE_ENV: ${NODE_ENV:-production}
+      NODE_ENV: production
       BACKEND_PORT: 3001
-      BACKEND_URL: ${BACKEND_URL:-http://localhost:3001}
-      FRONTEND_URL: ${FRONTEND_URL:-http://localhost:5173}
-      SESSION_SECRET: ${SESSION_SECRET:-dev-secret-change-in-production}
-      VITE_CONTRACT_ADDRESS: ${VITE_CONTRACT_ADDRESS:-0x0000000000000000000000000000000000000000}
-      VITE_SEPOLIA_RPC_URL: ${VITE_SEPOLIA_RPC_URL:-https://sepolia.infura.io/v3/your-key}
+      # Asset URIs baked into on-chain listings must use the public-facing URL
+      BACKEND_URL: ${FRONTEND_URL:-http://localhost:5173}
+      # Hardcoded to the internal nginx container — nginx overrides the Origin
+      # header before proxying, so CORS works regardless of deployment URL
+      FRONTEND_URL: http://frontend:8080
+      SESSION_SECRET: ${SESSION_SECRET}
+      VITE_CONTRACT_ADDRESS: ${VITE_CONTRACT_ADDRESS}
+      VITE_SEPOLIA_RPC_URL: ${VITE_SEPOLIA_RPC_URL}
       UPLOADS_DIR: /app/uploads
     networks:
       - art-marketplace
@@ -32,10 +34,12 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
       args:
-        VITE_CONTRACT_ADDRESS: ${VITE_CONTRACT_ADDRESS:-0x0000000000000000000000000000000000000000}
+        VITE_CONTRACT_ADDRESS: ${VITE_CONTRACT_ADDRESS}
         VITE_CHAIN_ID: ${VITE_CHAIN_ID:-11155111}
-        VITE_SEPOLIA_RPC_URL: ${VITE_SEPOLIA_RPC_URL:-https://sepolia.infura.io/v3/your-key}
-        VITE_BACKEND_URL: ${VITE_BACKEND_URL:-http://backend:3001}
+        VITE_SEPOLIA_RPC_URL: ${VITE_SEPOLIA_RPC_URL}
+        # Empty = all API calls use relative paths, proxied through nginx
+        # This means the frontend works on any domain (localhost or Cloudflare tunnel)
+        VITE_BACKEND_URL: ""
     container_name: artmarket-frontend
     restart: unless-stopped
     ports:
@@ -52,14 +56,9 @@ services:
     depends_on:
       - frontend
     restart: unless-stopped
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TUNNEL_TOKEN:-}
+    command: tunnel --no-autoupdate run --token ${CLOUDFLARED_TUNNEL_TOKEN}
     networks:
       - art-marketplace
-    profiles:
-      - tunnel
-
-volumes:
-  uploads_data:
 
 networks:
   art-marketplace:
