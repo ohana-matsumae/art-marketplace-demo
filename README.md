@@ -2,6 +2,20 @@
 
 A decentralized art marketplace platform that enables artists to register, list their work, and sell directly to collectors on the Ethereum blockchain. The platform combines on-chain smart contracts with a traditional web interface, featuring watermarked preview images and gated access to high-quality digital assets.
 
+## Team Members & Roles
+
+- https://github.com/ohana-matsumae : Tech Lead | DevOps
+- https://github.com/LoisAlonsagayGit : Frontend, UI
+- https://github.com/raynieee : QA & Docs
+- https://github.com/ShawnBarza : Smart Contracts Engineer
+
+## Live Frontend URL
+<img width="1917" height="945" alt="Screenshot 2026-05-04 214434" src="https://github.com/user-attachments/assets/9a0d8eb3-ceb7-47f3-9094-f254b7cabc83" />
+
+### Theme | Marketplace + Social & Community
+
+https://artm.shinosawa-laboratories.dev/
+
 ## Table of Contents
 
 - [Overview](#overview)
