@@ -106,19 +106,6 @@ export default function MainPage() {
               creators worldwide.
             </motion.p>
           </div>
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex md:flex-col gap-4 md:gap-6"
-          >
-            <div className="text-center md:text-right">
-              <p className={`text-2xl font-bold ${styles.statValue}`}>
-                {isLoading ? "…" : listingCount.toString()}
-              </p>
-              <p className={`text-xs ${styles.statLabel}`}>Artworks</p>
-            </div>
-          </motion.div>
         </div>
       </div>
 
@@ -138,18 +125,29 @@ export default function MainPage() {
               </button>
             ))}
           </div>
-          {isConnected && (
-            <button
-              onClick={() => setUploadOpen(true)}
-              className="px-4 py-2 rounded-full text-sm font-semibold"
-              style={{
-                background: "linear-gradient(135deg, #e8c547, #f0a030)",
-                color: "#000",
-              }}
-            >
-              + Upload Art
-            </button>
-          )}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <span className={`text-2xl font-bold ${styles.statValue}`}>{isLoading ? "…" : listingCount.toString()}</span>
+              <span className={`text-xs ${styles.statLabel}`}>Artworks</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="11" fill="#111" stroke="#e8c547" strokeWidth="2"/>
+                <path d="M16 7l-7 7" stroke="#e8c547" strokeWidth="2" strokeLinecap="round"/>
+                <path d="M10 16c.5 1 2 1 2.5 0 .5-1-1-2-1-2s-1.5 1-1 2z" fill="#e8c547"/>
+              </svg>
+            </div>
+            {isConnected && (
+              <button
+                onClick={() => setUploadOpen(true)}
+                className="px-4 py-2 rounded-full text-sm font-semibold"
+                style={{
+                  background: "linear-gradient(135deg, #e8c547, #f0a030)",
+                  color: "#000",
+                }}
+              >
+                + Upload Art
+              </button>
+            )}
+          </div>
         </div>
       </div>
 

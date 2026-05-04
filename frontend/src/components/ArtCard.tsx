@@ -69,7 +69,7 @@ export default function ArtCard({
             className={
               bought
                 ? "w-full h-full object-cover cursor-zoom-in"
-                : "w-full h-full object-cover blur-[2px] grayscale brightness-80 select-none pointer-events-none"
+                : "w-full h-full object-cover select-none pointer-events-none"
             }
             draggable={false}
             onClick={
